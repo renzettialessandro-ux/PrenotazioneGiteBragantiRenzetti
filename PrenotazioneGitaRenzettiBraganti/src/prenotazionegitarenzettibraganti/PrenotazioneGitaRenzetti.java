@@ -14,7 +14,9 @@ public class PrenotazioneGitaRenzetti {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Studente s=new Studente("marco","rossi",18,"4c");
+        GestioneFile gf=new GestioneFile();
+        gf.aggiungiStudenteFile(s);
     }
     
 }

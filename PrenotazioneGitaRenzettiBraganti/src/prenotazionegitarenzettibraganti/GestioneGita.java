@@ -10,10 +10,10 @@ import java.util.ArrayList;
  *
  * @author renzetti.alessandro
  */
-public class Prenotazione {
+public class GestioneGita {
     private ArrayList<Gita>gite;
 
-    public Prenotazione() {
+    public GestioneGita() {
         gite=new ArrayList();
     }
     public void aggiungi(Gita g){

@@ -12,14 +12,59 @@ import java.util.Objects;
  */
 public class Studente {
     private String nome;
+    private String cognome;
+    private int eta;
     private String classe;
     private Gita gitaScelta;
 
-    public Studente(String nome, String classe, Gita gitaScelta) {
+    public Studente(String nome, String cognome, int eta, String classe/* Gita gitaScelta*/) {
         this.nome = nome;
+        this.cognome = cognome;
+        this.eta = eta;
         this.classe = classe;
+        //this.gitaScelta = gitaScelta;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCognome() {
+        return cognome;
+    }
+
+    public void setCognome(String cognome) {
+        this.cognome = cognome;
+    }
+
+    public int getEta() {
+        return eta;
+    }
+
+    public void setEta(int eta) {
+        this.eta = eta;
+    }
+
+    public String getClasse() {
+        return classe;
+    }
+
+    public void setClasse(String classe) {
+        this.classe = classe;
+    }
+
+    public Gita getGitaScelta() {
+        return gitaScelta;
+    }
+
+    public void setGitaScelta(Gita gitaScelta) {
         this.gitaScelta = gitaScelta;
     }
+    
 
     @Override
     public String toString() {
