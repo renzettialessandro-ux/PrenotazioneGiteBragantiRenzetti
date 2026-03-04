@@ -74,16 +74,19 @@ public class GestioneFile {
                 while (recordAttuale < nRecord) {          
                     file.seek(recordAttuale * dimRecordStudente);
                     String nome = "";
-                    for (int i = 0; i < 20; i++) {         
+                    for (int i = 0; i < 20; i++) { 
+                        nome = nome.replace("*", "");
                         nome += file.readChar();
                     }
                     String cognome = "";
-                    for (int i = 0; i < 20; i++) {          
+                    for (int i = 0; i < 20; i++) {  
+                        cognome = cognome.replace("*", "");
                         cognome += file.readChar();
                     }
                     int eta = file.readInt();                
                     String classe = "";
-                    for (int i = 0; i < 20; i++) {          
+                    for (int i = 0; i < 20; i++) { 
+                        classe = classe.replace("*", "");
                         classe += file.readChar();
                     }
                     System.out.println(nome + " ; " + cognome + " ; " + classe + " ; " + eta);
@@ -107,12 +110,15 @@ public class GestioneFile {
                 while (recordAttuale < nRecord) {               
                     file.seek(recordAttuale * dimRecordGita);   
                     String nome = "";
-                    for (int i = 0; i < 20; i++) {             
+                    for (int i = 0; i < 20; i++) {  
+                        nome = nome.replace("*", "");
                         nome += file.readChar();
                     }
                     String id = "";
-                    for (int i = 0; i < 3; i++) {              
+                    for (int i = 0; i < 3; i++) { 
+                        id = id.replace("*", "");
                         id += file.readChar();
+                       
                     }
                     System.out.println(nome + " ; " + id);
                     recordAttuale++;                             
