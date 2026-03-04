@@ -15,8 +15,12 @@ public class PrenotazioneGitaRenzetti {
      */
     public static void main(String[] args) {
         Studente s=new Studente("marco","rossi",18,"4c");
+        Gita g= new Gita("AA1","salerno");
         GestioneFile gf=new GestioneFile();
         gf.aggiungiStudenteFile(s);
+        gf.aggiungiGitaFile(g);
+        gf.leggiFileStudente();
+        gf.leggiFileGita();
     }
     
 }
