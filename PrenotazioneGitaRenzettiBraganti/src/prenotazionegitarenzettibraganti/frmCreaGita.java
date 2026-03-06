@@ -29,21 +29,74 @@ public class frmCreaGita extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblNomeGita = new javax.swing.JLabel();
+        lblId = new javax.swing.JLabel();
+        txtNomeGita = new javax.swing.JTextField();
+        txtId = new javax.swing.JTextField();
+        btnAggiungiGita = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lblNomeGita.setText("nome");
+
+        lblId.setText("id Gita");
+
+        txtNomeGita.setText("jTextField1");
+
+        txtId.setText("jTextField1");
+
+        btnAggiungiGita.setText("Aggiungi Gita");
+        btnAggiungiGita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAggiungiGitaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(71, 71, 71)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNomeGita, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblId)))
+                    .addComponent(btnAggiungiGita)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNomeGita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addComponent(lblNomeGita)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNomeGita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblId)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65)
+                .addComponent(btnAggiungiGita)
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAggiungiGitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiGitaActionPerformed
+        aggiungiGita();
+        frmPrenotazione fp=new frmPrenotazione();
+        fp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAggiungiGitaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -71,5 +124,22 @@ public class frmCreaGita extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAggiungiGita;
+    private javax.swing.JLabel lblId;
+    private javax.swing.JLabel lblNomeGita;
+    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtNomeGita;
     // End of variables declaration//GEN-END:variables
+    GestioneGita gg= new GestioneGita();
+    
+    
+    public void aggiungiGita(){
+        String nome= txtNomeGita.getText();
+        String id= txtId.getText();
+        Gita g= new Gita(nome,id);
+        gg.aggiungi(g);
+
+    }
+
+
 }

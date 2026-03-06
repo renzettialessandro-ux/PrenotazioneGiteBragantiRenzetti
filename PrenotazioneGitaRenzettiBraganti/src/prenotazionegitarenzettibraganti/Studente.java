@@ -13,16 +13,16 @@ import java.util.Objects;
 public class Studente {
     private String nome;
     private String cognome;
-    private int eta;
+    private String id;
     private String classe;
     private Gita gitaScelta;
 
-    public Studente(String nome, String cognome, int eta, String classe/* Gita gitaScelta*/) {
+    public Studente(String nome, String cognome, String id, String classe) {
         this.nome = nome;
         this.cognome = cognome;
-        this.eta = eta;
+        this.id = id;
         this.classe = classe;
-        //this.gitaScelta = gitaScelta;
+        
     }
 
     public String getNome() {
@@ -39,14 +39,14 @@ public class Studente {
 
     public void setCognome(String cognome) {
         this.cognome = cognome;
+    }    
+
+    public String getId() {
+        return id;
     }
 
-    public int getEta() {
-        return eta;
-    }
-
-    public void setEta(int eta) {
-        this.eta = eta;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getClasse() {

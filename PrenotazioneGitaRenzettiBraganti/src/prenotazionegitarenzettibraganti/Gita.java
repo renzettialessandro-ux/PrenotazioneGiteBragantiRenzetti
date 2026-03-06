@@ -11,14 +11,20 @@ import java.util.*;
  * @author renzetti.alessandro
  */
 public class Gita {
-    private ArrayList<Studente>partecipanti;
+
+    private ArrayList<Studente> partecipanti;
     private String nome;
     private String id;
+    private GestioneFile gf = new GestioneFile();
 
-    public Gita(String id, String nome) {
+    public Gita(String nome, String id) {
         this.id = id;
         this.nome = nome;
-        partecipanti=new ArrayList();
+
+    }
+
+    public Gita() {
+        this.partecipanti = new ArrayList();
     }
 
     public ArrayList<Studente> getPartecipanti() {
@@ -44,17 +50,21 @@ public class Gita {
     public void setId(String id) {
         this.id = id;
     }
-    
+
     public void aggiungi(Studente s){
-        if(s!=null)partecipanti.add(s);
+        if(s!=null){
+            partecipanti.add(s);
+            gf.aggiungiStudenteFile(s);
+        }
     }
     public void elimina(Studente s){
         if(partecipanti.contains(s))partecipanti.remove(s);
+        
     }
 
     @Override
     public String toString() {
         return "Gita{" + "partecipanti=" + partecipanti + ", id=" + id + '}';
     }
-    
+
 }
