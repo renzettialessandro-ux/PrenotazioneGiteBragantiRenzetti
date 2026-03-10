@@ -31,9 +31,24 @@ public class frmPrenotazione extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         cmbGite = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         atxVisualizza = new javax.swing.JTextArea();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -107,16 +122,30 @@ public class frmPrenotazione extends javax.swing.JFrame {
     private javax.swing.JTextArea atxVisualizza;
     private javax.swing.JComboBox<String> cmbGite;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
     GestioneGita gg = new GestioneGita();
     private GestioneFile gf = new GestioneFile();
     Gita g = new Gita();
 
     public void aggiungiElementi() {
+        // Rimuove il listener temporaneamente per evitare trigger durante il caricamento
+        cmbGite.removeActionListener(cmbGite.getActionListeners()[0]);
         cmbGite.removeAllItems();
         ArrayList<Gita> lista = gf.leggiFileGita();
         for (Gita g : lista) {
             cmbGite.addItem(g.getNome());
+        }
+        // Riaggiunge il listener
+        cmbGite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbGiteActionPerformed(evt);
+            }
+        });
+        // Mostra subito gli studenti della prima gita selezionata
+        if (cmbGite.getItemCount() > 0) {
+            mostraStudenti();
         }
     }
 
@@ -146,7 +175,7 @@ public class frmPrenotazione extends javax.swing.JFrame {
         for (String idS : idStudenti) {
             Studente s = gf.cercaStudenteById(idS);
             if (s != null) {
-                atxVisualizza.append(s.getNome() + " " + s.getCognome() + " - Classe: " + s.getClasse() + "\n");
+                atxVisualizza.append(s.toString()+"-"+idGita+"\n");
             }
         }
     }

@@ -21,8 +21,10 @@ public class PrenotazioneGitaRenzetti {
         gf.aggiungiGitaFile(g);
         gf.leggiFileStudente();
         gf.leggiFileGita();*/
-        frmCreaStudente fcs=new frmCreaStudente();
-        fcs.setVisible(true);
+        
+        frmCreaGita fcg = new frmCreaGita();
+        fcg.setVisible(true);
+       
     }
     
 }

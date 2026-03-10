@@ -20,7 +20,7 @@ public class Gita {
     public Gita(String nome, String id) {
         this.id = id;
         this.nome = nome;
-
+        this.partecipanti = new ArrayList();
     }
 
     public Gita() {
@@ -64,7 +64,9 @@ public class Gita {
 
     @Override
     public String toString() {
-        return "Gita{" + "partecipanti=" + partecipanti + ", id=" + id + '}';
+        return "Gita{" + "nome=" + nome + ", id=" + id + '}';
     }
+
+    
 
 }

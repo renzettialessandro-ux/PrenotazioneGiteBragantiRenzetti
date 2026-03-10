@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package prenotazionegitarenzettibraganti;
 
 import java.io.FileNotFoundException;
@@ -9,100 +5,50 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
-/**
- *
- * @author renzetti.alessandro
- */
 public class GestioneFile {
 
-    private int dimRecordStudente = 126;
-    private int dimRecordGita = 46;
+    // Tutti i campi sono a lunghezza fissa di 20 char = 40 byte
+    // Record studente: nome(20) + cognome(20) + id(20) + classe(20) = 80 char = 160 byte
+    // Record gita:     nome(20) + id(20)                            = 40 char = 80 byte
+    private int dimRecordStudente = 160;
+    private int dimRecordGita = 80;
 
     public GestioneFile() {
     }
 
-    
-    public String aggiustaLunghezzaStringa(String s) {
-        String aggiustata = s;
-        if (s.length() < 20) {
-            for (int i = 0; i < (20 - s.length()); i++) {
-                aggiustata += "*";
-            }
-            return aggiustata;
-        } else if (s.length() > 20) {
-            aggiustata = s.substring(0, 20);
-            return aggiustata;
-        }
-        return s;
+    // Porta qualsiasi stringa a esattamente 20 caratteri (tronca o riempie con *)
+    public String aggiustaLunghezza(String s) {
+        if (s == null) s = "";
+        if (s.length() > 20) return s.substring(0, 20);
+        StringBuilder sb = new StringBuilder(s);
+        while (sb.length() < 20) sb.append('*');
+        return sb.toString();
     }
 
-    public Studente cercaStudenteById(String idCercato) {
-        try {
-            RandomAccessFile file = new RandomAccessFile("studenti.gay", "r");
-            int nRecord = (int) (file.length() / dimRecordStudente);
-            for (int i = 0; i < nRecord; i++) {
-                file.seek(i * dimRecordStudente);
-                String nome = "";
-                for (int j = 0; j < 20; j++) {
-                    nome += file.readChar();
-                }
-                nome = nome.replace("*", "").trim();
-                String cognome = "";
-                for (int j = 0; j < 20; j++) {
-                    cognome += file.readChar();
-                }
-                cognome = cognome.replace("*", "").trim();
-                String id = "";
-                for (int j = 0; j < 3; j++) {
-                    id += file.readChar();
-                }
-                id = id.replace("*", "").trim();
-                String classe = "";
-                for (int j = 0; j < 20; j++) {
-                    classe += file.readChar();
-                }
-                classe = classe.replace("*", "").trim();
-                if (id.equals(idCercato)) {
-                    file.close();
-                    return new Studente(nome, cognome, id, classe);
-                }
-            }
-            file.close();
-        } catch (IOException e) {
-            System.out.println("Errore lettura studenti");
-        }
-        return null;
+    // Rimuove i caratteri di riempimento '*'
+    private String pulisci(String s) {
+        return s.replace("*", "").trim();
     }
+
+    // Legge esattamente n caratteri dal file
+    private String leggiChars(RandomAccessFile file, int n) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < n; i++) sb.append(file.readChar());
+        return sb.toString();
+    }
+
+    // ===================== GITA =====================
 
     public void aggiungiGitaFile(Gita g) {
         try {
             RandomAccessFile file = new RandomAccessFile("gite.gay", "rw");
             int nRecord = (int) (file.length() / dimRecordGita);
             file.seek(nRecord * dimRecordGita);
-            file.writeChars(aggiustaLunghezzaStringa(g.getNome()));
-            file.writeChars(g.getId());
+            file.writeChars(aggiustaLunghezza(g.getNome())); // 20 char = 40 byte
+            file.writeChars(aggiustaLunghezza(g.getId()));   // 20 char = 40 byte
             file.close();
-        } catch (FileNotFoundException ex) {
-            System.out.println("File non trovato");
         } catch (IOException e) {
-            System.out.println("Problema in lettura-scrittura file");
-        }
-    }
-
-    public void aggiungiStudenteFile(Studente s) {
-        try {
-            RandomAccessFile file = new RandomAccessFile("studenti.gay", "rw");
-            int nRecord = (int) (file.length() / dimRecordStudente);
-            file.seek(nRecord * dimRecordStudente);
-            file.writeChars(aggiustaLunghezzaStringa(s.getNome()));    // 20 char = 40 byte
-            file.writeChars(aggiustaLunghezzaStringa(s.getCognome())); // 20 char = 40 byte
-            file.writeChars(s.getId());                                // 3 char  =  6 byte
-            file.writeChars(aggiustaLunghezzaStringa(s.getClasse())); // 20 char = 40 byte
-            file.close();                                              // totale  = 126 byte
-        } catch (FileNotFoundException ex) {
-            System.out.println("File non trovato");
-        } catch (IOException e) {
-            System.out.println("Problema in lettura-scrittura file");
+            System.out.println("Errore scrittura gita: " + e.getMessage());
         }
     }
 
@@ -111,30 +57,61 @@ public class GestioneFile {
         try {
             RandomAccessFile file = new RandomAccessFile("gite.gay", "r");
             int nRecord = (int) (file.length() / dimRecordGita);
-            int recordAttuale = 0;
-            while (recordAttuale < nRecord) {
-                file.seek(recordAttuale * dimRecordGita);
-                String nome = "";
-                for (int i = 0; i < 20; i++) {
-                    nome += file.readChar();
-                }
-                nome = nome.replace("*", "").trim();
-                String id = "";
-                for (int i = 0; i < 3; i++) {
-                    id += file.readChar();
-                }
-                id = id.replace("*", "").trim();
+            for (int i = 0; i < nRecord; i++) {
+                file.seek(i * dimRecordGita);
+                String nome = pulisci(leggiChars(file, 20));
+                String id   = pulisci(leggiChars(file, 20));
                 lista.add(new Gita(nome, id));
-                recordAttuale++;
             }
             file.close();
         } catch (FileNotFoundException ex) {
-            System.out.println("File non trovato");
+            System.out.println("File gite non trovato");
         } catch (IOException e) {
-            System.out.println("Problema in lettura-scrittura file");
+            System.out.println("Errore lettura gita: " + e.getMessage());
         }
         return lista;
     }
+
+    // ===================== STUDENTE =====================
+
+    public void aggiungiStudenteFile(Studente s) {
+        try {
+            RandomAccessFile file = new RandomAccessFile("studenti.gay", "rw");
+            int nRecord = (int) (file.length() / dimRecordStudente);
+            file.seek(nRecord * dimRecordStudente);
+            file.writeChars(aggiustaLunghezza(s.getNome()));    // 20 char = 40 byte
+            file.writeChars(aggiustaLunghezza(s.getCognome())); // 20 char = 40 byte
+            file.writeChars(aggiustaLunghezza(s.getId()));      // 20 char = 40 byte
+            file.writeChars(aggiustaLunghezza(s.getClasse())+"\n");  // 20 char = 40 byte
+            file.close();
+        } catch (IOException e) {
+            System.out.println("Errore scrittura studente: " + e.getMessage());
+        }
+    }
+
+    public Studente cercaStudenteById(String idCercato) {
+        try {
+            RandomAccessFile file = new RandomAccessFile("studenti.gay", "r");
+            int nRecord = (int) (file.length() / dimRecordStudente);
+            for (int i = 0; i < nRecord; i++) {
+                file.seek(i * dimRecordStudente);
+                String nome    = pulisci(leggiChars(file, 20));
+                String cognome = pulisci(leggiChars(file, 20));
+                String id      = pulisci(leggiChars(file, 20));
+                String classe  = pulisci(leggiChars(file, 20));
+                if (id.equals(idCercato)) {
+                    file.close();
+                    return new Studente(nome, cognome, id, classe);
+                }
+            }
+            file.close();
+        } catch (IOException e) {
+            System.out.println("Errore lettura studente: " + e.getMessage());
+        }
+        return null;
+    }
+
+    // ===================== COMBINAZIONI =====================
 
     public void aggiungiCombinazione(String idStudente, String idGita) {
         try {
@@ -142,7 +119,7 @@ public class GestioneFile {
             fw.write(idStudente + ";" + idGita + "\n");
             fw.close();
         } catch (IOException e) {
-            System.out.println("Errore scrittura combinazioni");
+            System.out.println("Errore scrittura combinazioni: " + e.getMessage());
         }
     }
 
@@ -153,13 +130,13 @@ public class GestioneFile {
             String riga;
             while ((riga = br.readLine()) != null) {
                 String[] parti = riga.split(";");
-                if (parti.length == 2 && parti[1].equals(idGita)) {
-                    idStudenti.add(parti[0]);
+                if (parti.length == 2 && parti[1].trim().equals(idGita.trim())) {
+                    idStudenti.add(parti[0].trim());
                 }
             }
             br.close();
         } catch (IOException e) {
-            System.out.println("Errore lettura combinazioni");
+            System.out.println("Errore lettura combinazioni: " + e.getMessage());
         }
         return idStudenti;
     }

@@ -64,12 +64,14 @@ public class Studente {
     public void setGitaScelta(Gita gitaScelta) {
         this.gitaScelta = gitaScelta;
     }
-    
 
     @Override
     public String toString() {
-        return "Studente{" + "nome=" + nome + ", classe=" + classe + ", gitaScelta=" + gitaScelta + '}';
+        return nome + "-"+cognome + "-" + id + "-" + classe ;
     }
+    
+
+  
 
     @Override
     public int hashCode() {
