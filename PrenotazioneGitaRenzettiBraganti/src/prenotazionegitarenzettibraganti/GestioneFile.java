@@ -7,9 +7,6 @@ import java.util.ArrayList;
 
 public class GestioneFile {
 
-    // Tutti i campi sono a lunghezza fissa di 20 char = 40 byte
-    // Record studente: nome(20) + cognome(20) + id(20) + classe(20) = 80 char = 160 byte
-    // Record gita:     nome(20) + id(20)                            = 40 char = 80 byte
     private int dimRecordStudente = 160;
     private int dimRecordGita = 80;
 
@@ -41,11 +38,11 @@ public class GestioneFile {
 
     public void aggiungiGitaFile(Gita g) {
         try {
-            RandomAccessFile file = new RandomAccessFile("gite.gay", "rw");
+            RandomAccessFile file = new RandomAccessFile("gite.fgm", "rw");
             int nRecord = (int) (file.length() / dimRecordGita);
             file.seek(nRecord * dimRecordGita);
-            file.writeChars(aggiustaLunghezza(g.getNome())); // 20 char = 40 byte
-            file.writeChars(aggiustaLunghezza(g.getId()));   // 20 char = 40 byte
+            file.writeChars(aggiustaLunghezza(g.getNome())); 
+            file.writeChars(aggiustaLunghezza(g.getId()));  
             file.close();
         } catch (IOException e) {
             System.out.println("Errore scrittura gita: " + e.getMessage());
@@ -55,7 +52,7 @@ public class GestioneFile {
     public ArrayList<Gita> leggiFileGita() {
         ArrayList<Gita> lista = new ArrayList<>();
         try {
-            RandomAccessFile file = new RandomAccessFile("gite.gay", "r");
+            RandomAccessFile file = new RandomAccessFile("gite.fgm", "r");
             int nRecord = (int) (file.length() / dimRecordGita);
             for (int i = 0; i < nRecord; i++) {
                 file.seek(i * dimRecordGita);
@@ -76,13 +73,13 @@ public class GestioneFile {
 
     public void aggiungiStudenteFile(Studente s) {
         try {
-            RandomAccessFile file = new RandomAccessFile("studenti.gay", "rw");
+            RandomAccessFile file = new RandomAccessFile("studenti.fgm", "rw");
             int nRecord = (int) (file.length() / dimRecordStudente);
             file.seek(nRecord * dimRecordStudente);
-            file.writeChars(aggiustaLunghezza(s.getNome()));    // 20 char = 40 byte
-            file.writeChars(aggiustaLunghezza(s.getCognome())); // 20 char = 40 byte
-            file.writeChars(aggiustaLunghezza(s.getId()));      // 20 char = 40 byte
-            file.writeChars(aggiustaLunghezza(s.getClasse())+"\n");  // 20 char = 40 byte
+            file.writeChars(aggiustaLunghezza(s.getNome()));    
+            file.writeChars(aggiustaLunghezza(s.getCognome()));
+            file.writeChars(aggiustaLunghezza(s.getId()));      
+            file.writeChars(aggiustaLunghezza(s.getClasse())); 
             file.close();
         } catch (IOException e) {
             System.out.println("Errore scrittura studente: " + e.getMessage());
@@ -91,7 +88,7 @@ public class GestioneFile {
 
     public Studente cercaStudenteById(String idCercato) {
         try {
-            RandomAccessFile file = new RandomAccessFile("studenti.gay", "r");
+            RandomAccessFile file = new RandomAccessFile("studenti.fgm", "r");
             int nRecord = (int) (file.length() / dimRecordStudente);
             for (int i = 0; i < nRecord; i++) {
                 file.seek(i * dimRecordStudente);

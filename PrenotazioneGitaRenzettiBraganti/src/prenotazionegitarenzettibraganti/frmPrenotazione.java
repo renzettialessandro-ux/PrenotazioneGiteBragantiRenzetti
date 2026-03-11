@@ -34,8 +34,9 @@ public class frmPrenotazione extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         cmbGite = new javax.swing.JComboBox<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        atxVisualizza = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblMostra = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -52,6 +53,8 @@ public class frmPrenotazione extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        cmbGite.setBackground(new java.awt.Color(255, 255, 204));
+        cmbGite.setForeground(new java.awt.Color(0, 51, 51));
         cmbGite.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbGite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -59,9 +62,23 @@ public class frmPrenotazione extends javax.swing.JFrame {
             }
         });
 
-        atxVisualizza.setColumns(20);
-        atxVisualizza.setRows(5);
-        jScrollPane1.setViewportView(atxVisualizza);
+        tblMostra.setBackground(new java.awt.Color(255, 255, 204));
+        tblMostra.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        tblMostra.setForeground(new java.awt.Color(0, 51, 51));
+        tblMostra.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(tblMostra);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\renzetti.alessandro\\Desktopl\\PrenotazioneGiteBragantiRenzetti\\PrenotazioneGitaRenzettiBraganti\\fotoLab1 (1) (1).jpg")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -69,20 +86,23 @@ public class frmPrenotazione extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(cmbGite, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cmbGite, 0, 227, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(cmbGite, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -119,11 +139,12 @@ public class frmPrenotazione extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea atxVisualizza;
     private javax.swing.JComboBox<String> cmbGite;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblMostra;
     // End of variables declaration//GEN-END:variables
     GestioneGita gg = new GestioneGita();
     private GestioneFile gf = new GestioneFile();
@@ -150,33 +171,34 @@ public class frmPrenotazione extends javax.swing.JFrame {
     }
 
     public void mostraStudenti() {
-        String nomeScelto = (String) cmbGite.getSelectedItem();
-        if (nomeScelto == null) {
-            return;
-        }
+    String nomeScelto = (String) cmbGite.getSelectedItem();
+    if (nomeScelto == null) return;
 
-        // Trova l'id della gita selezionata dal file
-        String idGita = "";
-        ArrayList<Gita> listaGite = gf.leggiFileGita();
-        for (Gita g : listaGite) {
-            if (g.getNome().equals(nomeScelto)) {
-                idGita = g.getId();
-                break;
-            }
-        }
-
-        // Leggi le combinazioni e cerca gli studenti
-        ArrayList<String> idStudenti = gf.leggiStudentiPerGita(idGita);
-        atxVisualizza.setText("");
-        if (idStudenti.isEmpty()) {
-            atxVisualizza.setText("Nessuno studente iscritto.");
-            return;
-        }
-        for (String idS : idStudenti) {
-            Studente s = gf.cercaStudenteById(idS);
-            if (s != null) {
-                atxVisualizza.append(s.toString()+"-"+idGita+"\n");
-            }
+    // Trova l'id della gita selezionata
+    String idGita = "";
+    for (Gita g : gf.leggiFileGita()) {
+        if (g.getNome().equals(nomeScelto)) {
+            idGita = g.getId();
+            break;
         }
     }
+
+    // Intestazioni colonne
+    String[] colonne = {"Nome", "Cognome", "Classe", "id"};
+    ArrayList<String> idStudenti = gf.leggiStudentiPerGita(idGita);
+
+    // Riempie i dati
+    String[][] dati = new String[idStudenti.size()][4];
+    for (int i = 0; i < idStudenti.size(); i++) {
+        Studente s = gf.cercaStudenteById(idStudenti.get(i));
+        if (s != null) {
+            dati[i][0] = s.getNome();
+            dati[i][1] = s.getCognome();
+            dati[i][2] = s.getClasse();
+            dati[i][3] =s.getId();
+        }
+    }
+
+    tblMostra.setModel(new javax.swing.table.DefaultTableModel(dati, colonne));
+}
 }
