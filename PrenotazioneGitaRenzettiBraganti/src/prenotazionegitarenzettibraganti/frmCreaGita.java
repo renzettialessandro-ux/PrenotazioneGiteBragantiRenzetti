@@ -1,16 +1,17 @@
 package prenotazionegitarenzettibraganti;
 
+import java.util.ArrayList;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author renzetti.alessandro
  */
 public class frmCreaGita extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(frmCreaGita.class.getName());
 
     /**
@@ -18,6 +19,7 @@ public class frmCreaGita extends javax.swing.JFrame {
      */
     public frmCreaGita() {
         initComponents();
+        
     }
 
     /**
@@ -34,6 +36,9 @@ public class frmCreaGita extends javax.swing.JFrame {
         txtNomeGita = new javax.swing.JTextField();
         txtId = new javax.swing.JTextField();
         btnAggiungiGita = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblGite = new javax.swing.JTable();
+        btnStudenti = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,43 +59,75 @@ public class frmCreaGita extends javax.swing.JFrame {
             }
         });
 
+        tblGite.setBackground(new java.awt.Color(255, 255, 204));
+        tblGite.setForeground(new java.awt.Color(0, 51, 51));
+        tblGite.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblGite);
+
+        btnStudenti.setText("Avanza");
+        btnStudenti.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStudentiActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(88, 88, 88)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNomeGita, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(72, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(115, 115, 115)
+                        .addComponent(lblNomeGita, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(113, 113, 113)
+                        .addComponent(lblId))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnAggiungiGita, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtNomeGita, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblId)
-                        .addGap(100, 100, 100))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblNomeGita, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(93, 93, 93))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnAggiungiGita, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(63, 63, 63))))
+                        .addGap(70, 70, 70)
+                        .addComponent(btnStudenti, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(84, 84, 84)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(lblNomeGita)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNomeGita, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblId)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(btnAggiungiGita)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(lblNomeGita)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNomeGita, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblId)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(74, 74, 74)
+                        .addComponent(btnAggiungiGita)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnStudenti))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         pack();
@@ -105,17 +142,27 @@ public class frmCreaGita extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdActionPerformed
 
+    private void btnStudentiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentiActionPerformed
+        int riga = tblGite.getSelectedRow();
+        String id = (String) tblGite.getValueAt(riga, 1);
+        frmCreaStudente fcs = new frmCreaStudente(id);
+        fcs.setVisible(true);
+    }//GEN-LAST:event_btnStudentiActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAggiungiGita;
+    private javax.swing.JButton btnStudenti;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblNomeGita;
+    private javax.swing.JTable tblGite;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNomeGita;
     // End of variables declaration//GEN-END:variables
-    GestioneGita gg= new GestioneGita();
-    
-    
-    public void aggiungiGita(){
+    GestioneGita gg = new GestioneGita();
+    GestioneFile gf = new GestioneFile();
+
+    public void aggiungiGita() {
         String nome = txtNomeGita.getText().trim();
         String id = txtId.getText().trim();
         if (nome.isEmpty() || id.isEmpty()) {
@@ -124,9 +171,19 @@ public class frmCreaGita extends javax.swing.JFrame {
         }
         Gita g = new Gita(nome, id);
         gg.aggiungi(g);
-        frmCreaStudente fcs = new frmCreaStudente(id);
-        fcs.setVisible(true);
+        aggiornaTabella();
+        txtNomeGita.setText("");
+        txtId.setText("");
     }
 
-
+    public void aggiornaTabella() {
+        String[] colonne = {"Nome", "Id"};
+        ArrayList<Gita> lista = gf.leggiFileGita();
+        String[][] dati = new String[lista.size()][2];
+        for (int i = 0; i < lista.size(); i++) {
+            dati[i][0] = lista.get(i).getNome();
+            dati[i][1] = lista.get(i).getId();
+        }
+        tblGite.setModel(new javax.swing.table.DefaultTableModel(dati, colonne));
+    }
 }
